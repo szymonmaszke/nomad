@@ -1,10 +1,10 @@
-name: Docker build
+name: Test Docker Image
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
-    name: Test the Docker image
+    name: Validate image builds
 
     runs-on: ubuntu-latest
 
