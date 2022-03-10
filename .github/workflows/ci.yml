@@ -1,51 +1,49 @@
+---
 name: CI
-
-on:
-  push:
-    branches:
-      - 'master'
-      - 'main'
-    tags:
-      - 'v*'
-
-jobs:
-  docker:
+on: 
+  push: 
+    branches: 
+      - master
+      - main
+    tags: 
+      - v* 
+jobs: 
+  deploy: 
     runs-on: ubuntu-latest
-    steps:
-      -
+    steps: 
+      - 
         name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Image metadata
+      - 
         id: meta
+        name: "Image metadata"
         uses: docker/metadata-action@v3
-        with:
-          images: ghcr.io/{{ github.repository_owner }}/nomad
+        with: 
+          images: "ghcr.io/{{ github.repository_owner }}/nomad"
           tags: |
-            type=ref,event=tag
-            type=ref,event=push
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
-            type=sha           
-      -
-        name: Set up QEMU
+              type=ref,event=tag
+              type=ref,event=push
+              type=semver,pattern={{version}}
+              type=semver,pattern={{major}}.{{minor}}
+              type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
+              type=sha
+      - 
+        name: "Set up QEMU"
         uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
+      - 
+        name: "Set up Docker Buildx"
         uses: docker/setup-buildx-action@v1
-      -
-        name: Login to Github Container Registry
-        uses: docker/login-action@v1 
+      - 
+        name: "Login to GHCR"
+        uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }} 
-          password: ${{ secrets.GITHUB_TOKEN }}
-       -
-        name: Build and push
+          password: "${{ secrets.GITHUB_TOKEN }}"
+          username: "${{ github.repository_owner }}"
+      - 
+        name: "Build and push"
         uses: docker/build-push-action@v2
-        with:
-          context: .
+        with: 
+          labels: "${{ steps.meta.outputs.labels }}"
+          tags: "${{ steps.meta.outputs.tags }}"
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
