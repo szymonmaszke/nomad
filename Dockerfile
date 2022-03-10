@@ -47,7 +47,7 @@ ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}
 RUN apk add --no-cache --virtual .nomad-deps gnupg \
   && GNUPGHOME="$(mktemp -d)" \
   && export GNUPGHOME \
-  && gpg --keyserver pgp.mit.edu --keyserver keys.openpgp.org --keyserver keyserver.ubuntu.com --recv-keys ${HASHICORP_PGP_FINGERPRINT} \
+  && gpg --keyserver pgp.mit.edu --keyserver keys.openpgp.org --keyserver keyserver.ubuntu.com --recv-keys "${HASHICORP_PGP_FINGERPRINT}" \
   && gpg --batch --verify nomad_${NOMAD_VERSION}_SHA256SUMS.sig nomad_${NOMAD_VERSION}_SHA256SUMS \
   && grep nomad_${NOMAD_VERSION}_linux_amd64.zip nomad_${NOMAD_VERSION}_SHA256SUMS | sha256sum -c \
   && unzip -d /bin nomad_${NOMAD_VERSION}_linux_amd64.zip \
@@ -68,7 +68,7 @@ ADD https://releases.hashicorp.com/nomad-driver-podman/${NOMAD_DRIVER_PODMAN_VER
 RUN apk add --no-cache --virtual .nomad-driver-podman-deps gnupg \
   && GNUPGHOME="$(mktemp -d)" \
   && export GNUPGHOME \
-  && gpg --keyserver pgp.mit.edu --keyserver keys.openpgp.org --keyserver keyserver.ubuntu.com --recv-keys ${HASHICORP_PGP_FINGERPRINT} \
+  && gpg --keyserver pgp.mit.edu --keyserver keys.openpgp.org --keyserver keyserver.ubuntu.com --recv-keys "${HASHICORP_PGP_FINGERPRINT}" \
   && gpg --batch --verify nomad-driver-podman_${NOMAD_DRIVER_PODMAN_VERSION}_SHA256SUMS.sig nomad-driver-podman_${NOMAD_DRIVER_PODMAN_VERSION}_SHA256SUMS \
   && grep nomad-driver-podman_${NOMAD_DRIVER_PODMAN_VERSION}_linux_amd64.zip nomad-driver-podman_${NOMAD_DRIVER_PODMAN_VERSION}_SHA256SUMS | sha256sum -c \
   && mkdir -p ${NOMAD_PLUGIN_DIR} \
