@@ -13,12 +13,14 @@ RUN addgroup nomad \
 
 # Allow to fetch artifacts from TLS endpoint during the builds and by Nomad after.
 # Install timezone data so we can run Nomad periodic jobs containing timezone information
+# Install cni-plugins for networking configuration
 RUN apk --update --no-cache add \
         ca-certificates \
         dumb-init \
         libcap \
         tzdata \
         su-exec \
+        cni-plugins \
   && update-ca-certificates
 
 # https://github.com/sgerrand/alpine-pkg-glibc/releases
