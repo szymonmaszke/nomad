@@ -19,7 +19,7 @@ jobs:
         name: "Image metadata"
         uses: docker/metadata-action@v3
         with: 
-          images: "ghcr.io/{{ github.repository_owner }}/nomad"
+          images: "ghcr.io/${{ github.repository_owner }}/nomad"
           tags: |
               type=ref,event=tag
               type=semver,pattern={{version}}
