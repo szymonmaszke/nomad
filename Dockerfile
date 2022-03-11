@@ -20,10 +20,7 @@ RUN apk --update --no-cache add \
         libcap \
         tzdata \
         su-exec \
-        cni-plugins \
-  && update-ca-certificates \
-  && mkdir -p /opt/cni \
-  && ln -s /usr/libexec/cni /opt/cni/bin
+  && update-ca-certificates
 
 # https://github.com/sgerrand/alpine-pkg-glibc/releases
 ARG GLIBC_VERSION=2.33-r0
