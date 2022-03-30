@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.1      4
 
 SHELL ["/bin/ash", "-x", "-c", "-o", "pipefail"]
 
@@ -15,7 +15,6 @@ RUN addgroup nomad \
 # Install timezone data so we can run Nomad periodic jobs containing timezone information
 RUN apk --update --no-cache add \
         ca-certificates \
-        dumb-init \
         libcap \
         tzdata \
         su-exec \
