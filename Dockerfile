@@ -2,8 +2,8 @@ FROM alpine:3.14
 
 SHELL ["/bin/ash", "-x", "-c", "-o", "pipefail"]
 
-# Based on https://github.com/djenriquez/nomad
-LABEL maintainer="Jonathan Ballet <jon@multani.info>"
+# Based on https://github.com/multani/docker-nomad
+LABEL maintainer="Szymon Maszke <github@maszke.co>"
 
 RUN addgroup nomad \
  && adduser -S -G nomad nomad \
@@ -13,7 +13,6 @@ RUN addgroup nomad \
 
 # Allow to fetch artifacts from TLS endpoint during the builds and by Nomad after.
 # Install timezone data so we can run Nomad periodic jobs containing timezone information
-# Install cni-plugins for networking configuration and link them to default dir of Nomad
 RUN apk --update --no-cache add \
         ca-certificates \
         dumb-init \
@@ -81,4 +80,5 @@ EXPOSE 4646 4647 4648 4648/udp
 
 COPY start.sh /usr/local/bin/
 
-ENTRYPOINT ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start.sh"]
+CMD ["--help"]
