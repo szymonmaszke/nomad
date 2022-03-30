@@ -15,6 +15,7 @@ RUN addgroup nomad \
 # Install timezone data so we can run Nomad periodic jobs containing timezone information
 RUN apk --update --no-cache add \
         ca-certificates \
+        tini \
         libcap \
         tzdata \
         su-exec \
