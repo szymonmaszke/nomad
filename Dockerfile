@@ -34,7 +34,7 @@ RUN apk add --no-cache \
 ARG HASHICORP_PGP_FINGERPRINT="C874 011F 0AB4 0511 0D02 1055 3436 5D94 72D7 468F"
 
 # https://releases.hashicorp.com/nomad/
-ARG NOMAD_VERSION=1.2.6
+ARG NOMAD_VERSION=1.3.0-beta.1
 
 ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip \
     nomad_${NOMAD_VERSION}_linux_amd64.zip
